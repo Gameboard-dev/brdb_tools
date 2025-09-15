@@ -84,7 +84,6 @@ dependencies = [
 [[package]]
 name = "brdb"
 version = "0.2.2"
-source = "git+https://github.com/brickadia-community/brdb#71ddeee16f5a654f6d673648f49a79f252eb2f93"
 dependencies = [
  "blake3",
  "indexmap",

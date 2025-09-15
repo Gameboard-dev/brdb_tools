@@ -1,17 +1,8 @@
 use brdb::{
-    Entity,
-    EntityChunkSoA,
-    ChunkIndex,
-    schema::{
+    pending::BrPendingFs, schema::{
         BrdbSchema, 
         BrdbSchemaGlobalData
-    },
-    BrReader,
-    Brdb,
-    IntoReader,
-    pending::{
-        BrPendingFs
-    }
+    }, BrReader, Brdb, ChunkIndex, Entity, EntityChunkIndexSoA, EntityChunkSoA, IntoReader
 };
 
 use std::{
@@ -28,6 +19,9 @@ fn world_path(filename: &str) -> PathBuf {
     PathBuf::from(format!("{}/Brickadia/Saved/Worlds/{}", local, filename))
 }
 
+fn is_dynamic_grid(entity: &Entity) -> bool {
+    return entity.data.get_schema_struct().is_some_and(|s| s.0.as_ref() == "Entity_DynamicBrickGrid")
+}
 
 struct WorldProcessor {
     global_data: Arc<BrdbSchemaGlobalData>,
@@ -52,25 +46,38 @@ impl WorldProcessor {
 
     fn duplicate_entities(&mut self) -> Result<(), Box<dyn std::error::Error>> {
 
-        let entity_chunk_indices: Vec<ChunkIndex> = self.db.entity_chunk_index()?;
-        let mut new_index: u32 = 500;
+        let mut old_entity_soa: EntityChunkIndexSoA = self.db.entity_chunk_index_soa()?;
+        let mut grid_ids = vec![];
         
-        for chunk_index in entity_chunk_indices {
+        for chunk_index in old_entity_soa.chunk_3d_indices {
+            
             let entities: Vec<Entity> = self.db.entity_chunk(chunk_index)?;
-            let mut structure_of_arrays = EntityChunkSoA::default();
+            let mut new_entity_soa = EntityChunkSoA::default();
 
             for mut entity in entities.into_iter() {
+                
                 let index: u32 = entity.id.unwrap() as u32;
+                
                 entity.frozen = true;
-                structure_of_arrays.add_entity(&self.global_data, &entity, index);
+                new_entity_soa.add_entity(&self.global_data, &entity, index);
 
                 let mut duplicate: Entity = entity.clone();
                 duplicate.location.x += 200f32;
-                structure_of_arrays.add_entity(&self.global_data, &duplicate, new_index);
-                new_index += 1;
+
+                new_entity_soa.add_entity(&self.global_data, &duplicate, old_entity_soa.next_persistent_index);
+                old_entity_soa.next_persistent_index += 1;
+
+                // Determine if the chunk is a dynamic brick grid
+                // https://github.com/brickadia-community/brdb/blob/attempt-remove-shadows/crates/brdb/examples/world_remove_shadows.rs#L20-L23
+                if is_dynamic_grid(&entity) {
+                    if let Some(id) = entity.id {
+                        grid_ids.push(id);
+                    }
+                }
+
             }
 
-            let bytes: Vec<u8> = structure_of_arrays.to_bytes(&self.entity_schema)?;
+            let bytes: Vec<u8> = new_entity_soa.to_bytes(&self.entity_schema)?;
 
             self.pending.push((
                 format!("{chunk_index}.mps"),
@@ -80,6 +87,7 @@ impl WorldProcessor {
 
         Ok(())
     }
+
 
     fn patch(&mut self) -> BrPendingFs {
         return BrPendingFs::Root(vec![(
