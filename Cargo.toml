@@ -5,3 +5,4 @@ edition = "2024"
 
 [dependencies]
 brdb = { path = "D:/RUST_PROJECTS/brdb/crates/brdb" }
+serde_json = "1.0"

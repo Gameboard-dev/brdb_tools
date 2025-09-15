@@ -2,7 +2,7 @@ use brdb::{
     pending::BrPendingFs, schema::{
         BrdbSchema, 
         BrdbSchemaGlobalData
-    }, BrReader, Brdb, ChunkIndex, Entity, EntityChunkIndexSoA, EntityChunkSoA, IntoReader
+    }, BrFsReader, BrReader, Brdb, ChunkIndex, Entity, EntityChunkIndexSoA, EntityChunkSoA, IntoReader
 };
 
 use std::{
@@ -47,7 +47,7 @@ impl WorldProcessor {
     fn duplicate_entities(&mut self) -> Result<(), Box<dyn std::error::Error>> {
 
         let mut old_entity_soa: EntityChunkIndexSoA = self.db.entity_chunk_index_soa()?;
-        let mut grid_ids = vec![];
+        let mut grid_ids = vec![1];
         
         for chunk_index in old_entity_soa.chunk_3d_indices {
             
@@ -74,7 +74,6 @@ impl WorldProcessor {
                         grid_ids.push(id);
                     }
                 }
-
             }
 
             let bytes: Vec<u8> = new_entity_soa.to_bytes(&self.entity_schema)?;
@@ -84,6 +83,26 @@ impl WorldProcessor {
                 BrPendingFs::File(Some(bytes)),
             ));
         }
+
+        let mut grids_files = vec![];
+
+        for grid in &grid_ids {
+            grids_files.push(grid.to_string());
+        }
+
+        let patch = BrPendingFs::Root(vec![(
+            "World".to_owned(),
+            BrPendingFs::Folder(Some(vec![(
+                "0".to_string(),
+                BrPendingFs::Folder(Some(vec![(
+                    "Bricks".to_string(),
+                    BrPendingFs::Folder(Some(vec![(
+                        "Grids".to_string(),
+                        BrPendingFs::Folder(Some(grids_files)),
+                    )])),
+                )])),
+            )])),
+        )]);
 
         Ok(())
     }

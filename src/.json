@@ -1,0 +1,540 @@
+Ok(Root({
+    "Meta": Folder(BrFolder { folder_id: 1, parent_id: None, name: "Meta", created_at: 1757884136, deleted_at: None
+    },
+    {
+        "World.json": File(BrFile { file_id: 2, parent_id: Some(1), name: "World.json", content_id: Some(2), created_at: 1757884136, deleted_at: None
+        }),
+        "Bundle.json": File(BrFile { file_id: 1, parent_id: Some(1), name: "Bundle.json", content_id: Some(1), created_at: 1757884136, deleted_at: None
+        })
+    }),
+    "World": Folder(BrFolder { folder_id: 2, parent_id: None, name: "World", created_at: 1757884136, deleted_at: None
+    },
+    {
+        "0": Folder(BrFolder { folder_id: 3, parent_id: Some(2), name: "0", created_at: 1757884136, deleted_at: None
+        },
+        {
+            "Bricks": Folder(BrFolder { folder_id: 5, parent_id: Some(3), name: "Bricks", created_at: 1757884136, deleted_at: None
+            },
+            {
+                "Grids": Folder(BrFolder { folder_id: 7, parent_id: Some(5), name: "Grids", created_at: 1757884136, deleted_at: None
+                },
+                {
+                    "1": Folder(BrFolder { folder_id: 31, parent_id: Some(7), name: "1", created_at: 1757884136, deleted_at: None
+                    },
+                    {
+                        "Chunks": Folder(BrFolder { folder_id: 32, parent_id: Some(31), name: "Chunks", created_at: 1757884136, deleted_at: None
+                        },
+                        {
+                            "-1_0_0.mps": File(BrFile { file_id: 292, parent_id: Some(32), name: "-1_0_0.mps", content_id: Some(196), created_at: 1757907965, deleted_at: None
+                            })
+                        }),
+                        "Components": Folder(BrFolder { folder_id: 33, parent_id: Some(31), name: "Components", created_at: 1757884136, deleted_at: None
+                        },
+                        {}),
+                        "Wires": Folder(BrFolder { folder_id: 80, parent_id: Some(31), name: "Wires", created_at: 1757904377, deleted_at: None
+                        },
+                        {}),
+                        "ChunkIndex.mps": File(BrFile { file_id: 291, parent_id: Some(31), name: "ChunkIndex.mps", content_id: Some(195), created_at: 1757907965, deleted_at: None
+                        })
+                    }),
+                    "100": Folder(BrFolder { folder_id: 76, parent_id: Some(7), name: "100", created_at: 1757904377, deleted_at: None
+                    },
+                    {
+                        "Chunks": Folder(BrFolder { folder_id: 77, parent_id: Some(76), name: "Chunks", created_at: 1757904377, deleted_at: None
+                        },
+                        {
+                            "-1_-1_-1.mps": File(BrFile { file_id: 198, parent_id: Some(77), name: "-1_-1_-1.mps", content_id: Some(144), created_at: 1757904377, deleted_at: None
+                            })
+                        }),
+                        "ChunkIndex.mps": File(BrFile { file_id: 197, parent_id: Some(76), name: "ChunkIndex.mps", content_id: Some(68), created_at: 1757904377, deleted_at: None
+                        })
+                    }),
+                    "103": Folder(BrFolder { folder_id: 78, parent_id: Some(7), name: "103", created_at: 1757904377, deleted_at: None
+                    },
+                    {
+                        "Chunks": Folder(BrFolder { folder_id: 79, parent_id: Some(78), name: "Chunks", created_at: 1757904377, deleted_at: None
+                        },
+                        {
+                            "-1_-1_-1.mps": File(BrFile { file_id: 200, parent_id: Some(79), name: "-1_-1_-1.mps", content_id: Some(145), created_at: 1757904377, deleted_at: None
+                            })
+                        }),
+                        "ChunkIndex.mps": File(BrFile { file_id: 199, parent_id: Some(78), name: "ChunkIndex.mps", content_id: Some(82), created_at: 1757904377, deleted_at: None
+                        })
+                    }),
+                    "104": Folder(BrFolder { folder_id: 81, parent_id: Some(7), name: "104", created_at: 1757904889, deleted_at: None
+                    },
+                    {
+                        "Chunks": Folder(BrFolder { folder_id: 82, parent_id: Some(81), name: "Chunks", created_at: 1757904889, deleted_at: None
+                        },
+                        {
+                            "-1_-1_-1.mps": File(BrFile { file_id: 215, parent_id: Some(82), name: "-1_-1_-1.mps", content_id: Some(154), created_at: 1757904889, deleted_at: None
+                            })
+                        }),
+                        "ChunkIndex.mps": File(BrFile { file_id: 214, parent_id: Some(81), name: "ChunkIndex.mps", content_id: Some(82), created_at: 1757904889, deleted_at: None
+                        })
+                    }),
+                    "105": Folder(BrFolder { folder_id: 83, parent_id: Some(7), name: "105", created_at: 1757904889, deleted_at: None
+                    },
+                    {
+                        "Chunks": Folder(BrFolder { folder_id: 84, parent_id: Some(83), name: "Chunks", created_at: 1757904889, deleted_at: None
+                        },
+                        {
+                            "-1_-1_-1.mps": File(BrFile { file_id: 217, parent_id: Some(84), name: "-1_-1_-1.mps", content_id: Some(155), created_at: 1757904889, deleted_at: None
+                            })
+                        }),
+                        "ChunkIndex.mps": File(BrFile { file_id: 216, parent_id: Some(83), name: "ChunkIndex.mps", content_id: Some(70), created_at: 1757904889, deleted_at: None
+                        })
+                    }),
+                    "107": Folder(BrFolder { folder_id: 88, parent_id: Some(7), name: "107", created_at: 1757906213, deleted_at: None
+                    },
+                    {
+                        "Chunks": Folder(BrFolder { folder_id: 89, parent_id: Some(88), name: "Chunks", created_at: 1757906213, deleted_at: None
+                        },
+                        {
+                            "-1_-1_-1.mps": File(BrFile { file_id: 261, parent_id: Some(89), name: "-1_-1_-1.mps", content_id: Some(178), created_at: 1757906674, deleted_at: None
+                            })
+                        }),
+                        "ChunkIndex.mps": File(BrFile { file_id: 260, parent_id: Some(88), name: "ChunkIndex.mps", content_id: Some(91), created_at: 1757906674, deleted_at: None
+                        })
+                    }),
+                    "108": Folder(BrFolder { folder_id: 90, parent_id: Some(7), name: "108", created_at: 1757906213, deleted_at: None
+                    },
+                    {
+                        "Chunks": Folder(BrFolder { folder_id: 91, parent_id: Some(90), name: "Chunks", created_at: 1757906213, deleted_at: None
+                        },
+                        {
+                            "-1_-1_-1.mps": File(BrFile { file_id: 279, parent_id: Some(91), name: "-1_-1_-1.mps", content_id: Some(188), created_at: 1757907379, deleted_at: None
+                            })
+                        }),
+                        "ChunkIndex.mps": File(BrFile { file_id: 278, parent_id: Some(90), name: "ChunkIndex.mps", content_id: Some(70), created_at: 1757907379, deleted_at: None
+                        })
+                    }),
+                    "109": Folder(BrFolder { folder_id: 92, parent_id: Some(7), name: "109", created_at: 1757906213, deleted_at: None
+                    },
+                    {
+                        "Chunks": Folder(BrFolder { folder_id: 93, parent_id: Some(92), name: "Chunks", created_at: 1757906213, deleted_at: None
+                        },
+                        {
+                            "-1_-1_-1.mps": File(BrFile { file_id: 281, parent_id: Some(93), name: "-1_-1_-1.mps", content_id: Some(189), created_at: 1757907379, deleted_at: None
+                            })
+                        }),
+                        "ChunkIndex.mps": File(BrFile { file_id: 280, parent_id: Some(92), name: "ChunkIndex.mps", content_id: Some(70), created_at: 1757907379, deleted_at: None
+                        })
+                    }),
+                    "110": Folder(BrFolder { folder_id: 94, parent_id: Some(7), name: "110", created_at: 1757906213, deleted_at: None
+                    },
+                    {
+                        "Chunks": Folder(BrFolder { folder_id: 95, parent_id: Some(94), name: "Chunks", created_at: 1757906213, deleted_at: None
+                        },
+                        {
+                            "-1_-1_-1.mps": File(BrFile { file_id: 269, parent_id: Some(95), name: "-1_-1_-1.mps", content_id: Some(183), created_at: 1757906959, deleted_at: None
+                            })
+                        }),
+                        "ChunkIndex.mps": File(BrFile { file_id: 268, parent_id: Some(94), name: "ChunkIndex.mps", content_id: Some(182), created_at: 1757906959, deleted_at: None
+                        })
+                    }),
+                    "113": Folder(BrFolder { folder_id: 96, parent_id: Some(7), name: "113", created_at: 1757906213, deleted_at: None
+                    },
+                    {
+                        "Chunks": Folder(BrFolder { folder_id: 97, parent_id: Some(96), name: "Chunks", created_at: 1757906213, deleted_at: None
+                        },
+                        {
+                            "-1_-1_-1.mps": File(BrFile { file_id: 290, parent_id: Some(97), name: "-1_-1_-1.mps", content_id: Some(174), created_at: 1757907965, deleted_at: None
+                            })
+                        }),
+                        "ChunkIndex.mps": File(BrFile { file_id: 254, parent_id: Some(96), name: "ChunkIndex.mps", content_id: Some(82), created_at: 1757906213, deleted_at: None
+                        })
+                    }),
+                    "35": Folder(BrFolder { folder_id: 11, parent_id: Some(7), name: "35", created_at: 1757884136, deleted_at: None
+                    },
+                    {
+                        "Chunks": Folder(BrFolder { folder_id: 12, parent_id: Some(11), name: "Chunks", created_at: 1757884136, deleted_at: None
+                        },
+                        {
+                            "-1_-1_-1.mps": File(BrFile { file_id: 20, parent_id: Some(12), name: "-1_-1_-1.mps", content_id: Some(20), created_at: 1757884136, deleted_at: None
+                            })
+                        }),
+                        "ChunkIndex.mps": File(BrFile { file_id: 19, parent_id: Some(11), name: "ChunkIndex.mps", content_id: Some(19), created_at: 1757884136, deleted_at: None
+                        })
+                    }),
+                    "37": Folder(BrFolder { folder_id: 16, parent_id: Some(7), name: "37", created_at: 1757884136, deleted_at: None
+                    },
+                    {
+                        "Chunks": Folder(BrFolder { folder_id: 17, parent_id: Some(16), name: "Chunks", created_at: 1757884136, deleted_at: None
+                        },
+                        {
+                            "-1_-1_-1.mps": File(BrFile { file_id: 181, parent_id: Some(17), name: "-1_-1_-1.mps", content_id: Some(136), created_at: 1757904377, deleted_at: None
+                            })
+                        }),
+                        "Components": Folder(BrFolder { folder_id: 34, parent_id: Some(16), name: "Components", created_at: 1757885937, deleted_at: None
+                        },
+                        {}),
+                        "Wires": Folder(BrFolder { folder_id: 35, parent_id: Some(16), name: "Wires", created_at: 1757885937, deleted_at: None
+                        },
+                        {}),
+                        "ChunkIndex.mps": File(BrFile { file_id: 180, parent_id: Some(16), name: "ChunkIndex.mps", content_id: Some(135), created_at: 1757904377, deleted_at: None
+                        })
+                    }),
+                    "41": Folder(BrFolder { folder_id: 21, parent_id: Some(7), name: "41", created_at: 1757884136, deleted_at: None
+                    },
+                    {
+                        "Chunks": Folder(BrFolder { folder_id: 22, parent_id: Some(21), name: "Chunks", created_at: 1757884136, deleted_at: None
+                        },
+                        {}),
+                        "ChunkIndex.mps": File(BrFile { file_id: 30, parent_id: Some(21), name: "ChunkIndex.mps", content_id: Some(30), created_at: 1757884136, deleted_at: None
+                        })
+                    }),
+                    "43": Folder(BrFolder { folder_id: 26, parent_id: Some(7), name: "43", created_at: 1757884136, deleted_at: None
+                    },
+                    {
+                        "Chunks": Folder(BrFolder { folder_id: 27, parent_id: Some(26), name: "Chunks", created_at: 1757884136, deleted_at: None
+                        },
+                        {}),
+                        "Components": Folder(BrFolder { folder_id: 28, parent_id: Some(26), name: "Components", created_at: 1757884136, deleted_at: None
+                        },
+                        {}),
+                        "ChunkIndex.mps": File(BrFile { file_id: 35, parent_id: Some(26), name: "ChunkIndex.mps", content_id: Some(35), created_at: 1757884136, deleted_at: None
+                        })
+                    }),
+                    "49": Folder(BrFolder { folder_id: 8, parent_id: Some(7), name: "49", created_at: 1757884136, deleted_at: None
+                    },
+                    {
+                        "Chunks": Folder(BrFolder { folder_id: 9, parent_id: Some(8), name: "Chunks", created_at: 1757884136, deleted_at: None
+                        },
+                        {}),
+                        "Components": Folder(BrFolder { folder_id: 10, parent_id: Some(8), name: "Components", created_at: 1757884136, deleted_at: None
+                        },
+                        {}),
+                        "ChunkIndex.mps": File(BrFile { file_id: 16, parent_id: Some(8), name: "ChunkIndex.mps", content_id: Some(16), created_at: 1757884136, deleted_at: None
+                        })
+                    }),
+                    "55": Folder(BrFolder { folder_id: 23, parent_id: Some(7), name: "55", created_at: 1757884136, deleted_at: None
+                    },
+                    {
+                        "Chunks": Folder(BrFolder { folder_id: 24, parent_id: Some(23), name: "Chunks", created_at: 1757884136, deleted_at: None
+                        },
+                        {}),
+                        "Components": Folder(BrFolder { folder_id: 25, parent_id: Some(23), name: "Components", created_at: 1757884136, deleted_at: None
+                        },
+                        {}),
+                        "ChunkIndex.mps": File(BrFile { file_id: 59, parent_id: Some(23), name: "ChunkIndex.mps", content_id: Some(58), created_at: 1757885937, deleted_at: None
+                        })
+                    }),
+                    "59": Folder(BrFolder { folder_id: 18, parent_id: Some(7), name: "59", created_at: 1757884136, deleted_at: None
+                    },
+                    {
+                        "Chunks": Folder(BrFolder { folder_id: 19, parent_id: Some(18), name: "Chunks", created_at: 1757884136, deleted_at: None
+                        },
+                        {}),
+                        "Components": Folder(BrFolder { folder_id: 20, parent_id: Some(18), name: "Components", created_at: 1757884136, deleted_at: None
+                        },
+                        {}),
+                        "ChunkIndex.mps": File(BrFile { file_id: 27, parent_id: Some(18), name: "ChunkIndex.mps", content_id: Some(27), created_at: 1757884136, deleted_at: None
+                        })
+                    }),
+                    "69": Folder(BrFolder { folder_id: 13, parent_id: Some(7), name: "69", created_at: 1757884136, deleted_at: None
+                    },
+                    {
+                        "Chunks": Folder(BrFolder { folder_id: 14, parent_id: Some(13), name: "Chunks", created_at: 1757884136, deleted_at: None
+                        },
+                        {
+                            "0_-1_-1.mps": File(BrFile { file_id: 179, parent_id: Some(14), name: "0_-1_-1.mps", content_id: Some(134), created_at: 1757904377, deleted_at: None
+                            })
+                        }),
+                        "Components": Folder(BrFolder { folder_id: 15, parent_id: Some(13), name: "Components", created_at: 1757884136, deleted_at: None
+                        },
+                        {}),
+                        "ChunkIndex.mps": File(BrFile { file_id: 178, parent_id: Some(13), name: "ChunkIndex.mps", content_id: Some(133), created_at: 1757904377, deleted_at: None
+                        })
+                    }),
+                    "70": Folder(BrFolder { folder_id: 29, parent_id: Some(7), name: "70", created_at: 1757884136, deleted_at: None
+                    },
+                    {
+                        "Chunks": Folder(BrFolder { folder_id: 30, parent_id: Some(29), name: "Chunks", created_at: 1757884136, deleted_at: None
+                        },
+                        {
+                            "-1_-1_-1.mps": File(BrFile { file_id: 39, parent_id: Some(30), name: "-1_-1_-1.mps", content_id: Some(38), created_at: 1757884136, deleted_at: None
+                            })
+                        }),
+                        "ChunkIndex.mps": File(BrFile { file_id: 38, parent_id: Some(29), name: "ChunkIndex.mps", content_id: Some(30), created_at: 1757884136, deleted_at: None
+                        })
+                    }),
+                    "72": Folder(BrFolder { folder_id: 36, parent_id: Some(7), name: "72", created_at: 1757886825, deleted_at: None
+                    },
+                    {
+                        "Chunks": Folder(BrFolder { folder_id: 37, parent_id: Some(36), name: "Chunks", created_at: 1757886825, deleted_at: None
+                        },
+                        {}),
+                        "ChunkIndex.mps": File(BrFile { file_id: 74, parent_id: Some(36), name: "ChunkIndex.mps", content_id: Some(68), created_at: 1757886825, deleted_at: None
+                        })
+                    }),
+                    "74": Folder(BrFolder { folder_id: 38, parent_id: Some(7), name: "74", created_at: 1757886825, deleted_at: None
+                    },
+                    {
+                        "Chunks": Folder(BrFolder { folder_id: 39, parent_id: Some(38), name: "Chunks", created_at: 1757886825, deleted_at: None
+                        },
+                        {
+                            "-1_-1_-1.mps": File(BrFile { file_id: 106, parent_id: Some(39), name: "-1_-1_-1.mps", content_id: Some(89), created_at: 1757890099, deleted_at: None
+                            })
+                        }),
+                        "ChunkIndex.mps": File(BrFile { file_id: 105, parent_id: Some(38), name: "ChunkIndex.mps", content_id: Some(30), created_at: 1757890099, deleted_at: None
+                        })
+                    }),
+                    "75": Folder(BrFolder { folder_id: 42, parent_id: Some(7), name: "75", created_at: 1757888137, deleted_at: None
+                    },
+                    {
+                        "Chunks": Folder(BrFolder { folder_id: 43, parent_id: Some(42), name: "Chunks", created_at: 1757888137, deleted_at: None
+                        },
+                        {
+                            "-1_-1_-1.mps": File(BrFile { file_id: 182, parent_id: Some(43), name: "-1_-1_-1.mps", content_id: Some(137), created_at: 1757904377, deleted_at: None
+                            })
+                        }),
+                        "ChunkIndex.mps": File(BrFile { file_id: 142, parent_id: Some(42), name: "ChunkIndex.mps", content_id: Some(110), created_at: 1757896364, deleted_at: None
+                        })
+                    }),
+                    "76": Folder(BrFolder { folder_id: 40, parent_id: Some(7), name: "76", created_at: 1757888137, deleted_at: None
+                    },
+                    {
+                        "Chunks": Folder(BrFolder { folder_id: 41, parent_id: Some(40), name: "Chunks", created_at: 1757888137, deleted_at: None
+                        },
+                        {
+                            "-1_-1_-1.mps": File(BrFile { file_id: 102, parent_id: Some(41), name: "-1_-1_-1.mps", content_id: Some(89), created_at: 1757890099, deleted_at: None
+                            })
+                        }),
+                        "ChunkIndex.mps": File(BrFile { file_id: 101, parent_id: Some(40), name: "ChunkIndex.mps", content_id: Some(30), created_at: 1757890099, deleted_at: None
+                        })
+                    }),
+                    "79": Folder(BrFolder { folder_id: 44, parent_id: Some(7), name: "79", created_at: 1757890099, deleted_at: None
+                    },
+                    {
+                        "Chunks": Folder(BrFolder { folder_id: 45, parent_id: Some(44), name: "Chunks", created_at: 1757890099, deleted_at: None
+                        },
+                        {}),
+                        "ChunkIndex.mps": File(BrFile { file_id: 107, parent_id: Some(44), name: "ChunkIndex.mps", content_id: Some(91), created_at: 1757890099, deleted_at: None
+                        })
+                    }),
+                    "80": Folder(BrFolder { folder_id: 46, parent_id: Some(7), name: "80", created_at: 1757890099, deleted_at: None
+                    },
+                    {
+                        "Chunks": Folder(BrFolder { folder_id: 47, parent_id: Some(46), name: "Chunks", created_at: 1757890099, deleted_at: None
+                        },
+                        {
+                            "-1_-1_-1.mps": File(BrFile { file_id: 145, parent_id: Some(47), name: "-1_-1_-1.mps", content_id: Some(113), created_at: 1757896364, deleted_at: None
+                            })
+                        }),
+                        "ChunkIndex.mps": File(BrFile { file_id: 144, parent_id: Some(46), name: "ChunkIndex.mps", content_id: Some(112), created_at: 1757896364, deleted_at: None
+                        })
+                    }),
+                    "81": Folder(BrFolder { folder_id: 48, parent_id: Some(7), name: "81", created_at: 1757890099, deleted_at: None
+                    },
+                    {
+                        "Chunks": Folder(BrFolder { folder_id: 49, parent_id: Some(48), name: "Chunks", created_at: 1757890099, deleted_at: None
+                        },
+                        {
+                            "-1_-1_-1.mps": File(BrFile { file_id: 147, parent_id: Some(49), name: "-1_-1_-1.mps", content_id: Some(115), created_at: 1757896364, deleted_at: None
+                            })
+                        }),
+                        "ChunkIndex.mps": File(BrFile { file_id: 146, parent_id: Some(48), name: "ChunkIndex.mps", content_id: Some(114), created_at: 1757896364, deleted_at: None
+                        })
+                    }),
+                    "82": Folder(BrFolder { folder_id: 50, parent_id: Some(7), name: "82", created_at: 1757890099, deleted_at: None
+                    },
+                    {
+                        "Chunks": Folder(BrFolder { folder_id: 51, parent_id: Some(50), name: "Chunks", created_at: 1757890099, deleted_at: None
+                        },
+                        {
+                            "-1_-1_-1.mps": File(BrFile { file_id: 223, parent_id: Some(51), name: "-1_-1_-1.mps", content_id: Some(139), created_at: 1757905411, deleted_at: None
+                            })
+                        }),
+                        "ChunkIndex.mps": File(BrFile { file_id: 148, parent_id: Some(50), name: "ChunkIndex.mps", content_id: Some(114), created_at: 1757896364, deleted_at: None
+                        })
+                    }),
+                    "83": Folder(BrFolder { folder_id: 52, parent_id: Some(7), name: "83", created_at: 1757891803, deleted_at: None
+                    },
+                    {
+                        "Chunks": Folder(BrFolder { folder_id: 53, parent_id: Some(52), name: "Chunks", created_at: 1757891803, deleted_at: None
+                        },
+                        {
+                            "-1_-1_-1.mps": File(BrFile { file_id: 224, parent_id: Some(53), name: "-1_-1_-1.mps", content_id: Some(117), created_at: 1757905411, deleted_at: None
+                            })
+                        }),
+                        "ChunkIndex.mps": File(BrFile { file_id: 150, parent_id: Some(52), name: "ChunkIndex.mps", content_id: Some(112), created_at: 1757896364, deleted_at: None
+                        })
+                    }),
+                    "84": Folder(BrFolder { folder_id: 54, parent_id: Some(7), name: "84", created_at: 1757891803, deleted_at: None
+                    },
+                    {
+                        "Chunks": Folder(BrFolder { folder_id: 55, parent_id: Some(54), name: "Chunks", created_at: 1757891803, deleted_at: None
+                        },
+                        {
+                            "-1_-1_-1.mps": File(BrFile { file_id: 153, parent_id: Some(55), name: "-1_-1_-1.mps", content_id: Some(118), created_at: 1757896364, deleted_at: None
+                            })
+                        }),
+                        "ChunkIndex.mps": File(BrFile { file_id: 152, parent_id: Some(54), name: "ChunkIndex.mps", content_id: Some(112), created_at: 1757896364, deleted_at: None
+                        })
+                    }),
+                    "85": Folder(BrFolder { folder_id: 56, parent_id: Some(7), name: "85", created_at: 1757891803, deleted_at: None
+                    },
+                    {
+                        "Chunks": Folder(BrFolder { folder_id: 57, parent_id: Some(56), name: "Chunks", created_at: 1757891803, deleted_at: None
+                        },
+                        {
+                            "-1_-1_-1.mps": File(BrFile { file_id: 155, parent_id: Some(57), name: "-1_-1_-1.mps", content_id: Some(119), created_at: 1757896364, deleted_at: None
+                            })
+                        }),
+                        "ChunkIndex.mps": File(BrFile { file_id: 154, parent_id: Some(56), name: "ChunkIndex.mps", content_id: Some(114), created_at: 1757896364, deleted_at: None
+                        })
+                    }),
+                    "86": Folder(BrFolder { folder_id: 58, parent_id: Some(7), name: "86", created_at: 1757891803, deleted_at: None
+                    },
+                    {
+                        "Chunks": Folder(BrFolder { folder_id: 59, parent_id: Some(58), name: "Chunks", created_at: 1757891803, deleted_at: None
+                        },
+                        {
+                            "-1_-1_-1.mps": File(BrFile { file_id: 165, parent_id: Some(59), name: "-1_-1_-1.mps", content_id: Some(120), created_at: 1757897536, deleted_at: None
+                            })
+                        }),
+                        "ChunkIndex.mps": File(BrFile { file_id: 156, parent_id: Some(58), name: "ChunkIndex.mps", content_id: Some(112), created_at: 1757896364, deleted_at: None
+                        })
+                    }),
+                    "88": Folder(BrFolder { folder_id: 60, parent_id: Some(7), name: "88", created_at: 1757896364, deleted_at: None
+                    },
+                    {
+                        "Chunks": Folder(BrFolder { folder_id: 61, parent_id: Some(60), name: "Chunks", created_at: 1757896364, deleted_at: None
+                        },
+                        {
+                            "-1_-1_-1.mps": File(BrFile { file_id: 238, parent_id: Some(61), name: "-1_-1_-1.mps", content_id: Some(168), created_at: 1757906213, deleted_at: None
+                            })
+                        }),
+                        "ChunkIndex.mps": File(BrFile { file_id: 166, parent_id: Some(60), name: "ChunkIndex.mps", content_id: Some(126), created_at: 1757897536, deleted_at: None
+                        })
+                    }),
+                    "89": Folder(BrFolder { folder_id: 62, parent_id: Some(7), name: "89", created_at: 1757896364, deleted_at: None
+                    },
+                    {
+                        "Chunks": Folder(BrFolder { folder_id: 63, parent_id: Some(62), name: "Chunks", created_at: 1757896364, deleted_at: None
+                        },
+                        {}),
+                        "ChunkIndex.mps": File(BrFile { file_id: 160, parent_id: Some(62), name: "ChunkIndex.mps", content_id: Some(82), created_at: 1757896364, deleted_at: None
+                        })
+                    }),
+                    "94": Folder(BrFolder { folder_id: 64, parent_id: Some(7), name: "94", created_at: 1757904377, deleted_at: None
+                    },
+                    {
+                        "Chunks": Folder(BrFolder { folder_id: 65, parent_id: Some(64), name: "Chunks", created_at: 1757904377, deleted_at: None
+                        },
+                        {
+                            "-1_-1_-1.mps": File(BrFile { file_id: 267, parent_id: Some(65), name: "-1_-1_-1.mps", content_id: Some(138), created_at: 1757906959, deleted_at: None
+                            })
+                        }),
+                        "Components": Folder(BrFolder { folder_id: 85, parent_id: Some(64), name: "Components", created_at: 1757906213, deleted_at: None
+                        },
+                        {}),
+                        "ChunkIndex.mps": File(BrFile { file_id: 266, parent_id: Some(64), name: "ChunkIndex.mps", content_id: Some(110), created_at: 1757906959, deleted_at: None
+                        })
+                    }),
+                    "95": Folder(BrFolder { folder_id: 66, parent_id: Some(7), name: "95", created_at: 1757904377, deleted_at: None
+                    },
+                    {
+                        "Chunks": Folder(BrFolder { folder_id: 67, parent_id: Some(66), name: "Chunks", created_at: 1757904377, deleted_at: None
+                        },
+                        {
+                            "-1_-1_-1.mps": File(BrFile { file_id: 275, parent_id: Some(67), name: "-1_-1_-1.mps", content_id: Some(140), created_at: 1757907379, deleted_at: None
+                            })
+                        }),
+                        "Components": Folder(BrFolder { folder_id: 86, parent_id: Some(66), name: "Components", created_at: 1757906213, deleted_at: None
+                        },
+                        {}),
+                        "ChunkIndex.mps": File(BrFile { file_id: 274, parent_id: Some(66), name: "ChunkIndex.mps", content_id: Some(110), created_at: 1757907379, deleted_at: None
+                        })
+                    }),
+                    "96": Folder(BrFolder { folder_id: 68, parent_id: Some(7), name: "96", created_at: 1757904377, deleted_at: None
+                    },
+                    {
+                        "Chunks": Folder(BrFolder { folder_id: 69, parent_id: Some(68), name: "Chunks", created_at: 1757904377, deleted_at: None
+                        },
+                        {
+                            "-1_-1_-1.mps": File(BrFile { file_id: 277, parent_id: Some(69), name: "-1_-1_-1.mps", content_id: Some(187), created_at: 1757907379, deleted_at: None
+                            })
+                        }),
+                        "Components": Folder(BrFolder { folder_id: 87, parent_id: Some(68), name: "Components", created_at: 1757906213, deleted_at: None
+                        },
+                        {}),
+                        "ChunkIndex.mps": File(BrFile { file_id: 276, parent_id: Some(68), name: "ChunkIndex.mps", content_id: Some(110), created_at: 1757907379, deleted_at: None
+                        })
+                    }),
+                    "97": Folder(BrFolder { folder_id: 70, parent_id: Some(7), name: "97", created_at: 1757904377, deleted_at: None
+                    },
+                    {
+                        "Chunks": Folder(BrFolder { folder_id: 71, parent_id: Some(70), name: "Chunks", created_at: 1757904377, deleted_at: None
+                        },
+                        {
+                            "-1_-1_-1.mps": File(BrFile { file_id: 212, parent_id: Some(71), name: "-1_-1_-1.mps", content_id: Some(142), created_at: 1757904889, deleted_at: None
+                            })
+                        }),
+                        "ChunkIndex.mps": File(BrFile { file_id: 191, parent_id: Some(70), name: "ChunkIndex.mps", content_id: Some(68), created_at: 1757904377, deleted_at: None
+                        })
+                    }),
+                    "98": Folder(BrFolder { folder_id: 72, parent_id: Some(7), name: "98", created_at: 1757904377, deleted_at: None
+                    },
+                    {
+                        "Chunks": Folder(BrFolder { folder_id: 73, parent_id: Some(72), name: "Chunks", created_at: 1757904377, deleted_at: None
+                        },
+                        {
+                            "-1_-1_-1.mps": File(BrFile { file_id: 225, parent_id: Some(73), name: "-1_-1_-1.mps", content_id: Some(143), created_at: 1757905411, deleted_at: None
+                            })
+                        }),
+                        "ChunkIndex.mps": File(BrFile { file_id: 193, parent_id: Some(72), name: "ChunkIndex.mps", content_id: Some(126), created_at: 1757904377, deleted_at: None
+                        })
+                    }),
+                    "99": Folder(BrFolder { folder_id: 74, parent_id: Some(7), name: "99", created_at: 1757904377, deleted_at: None
+                    },
+                    {
+                        "Chunks": Folder(BrFolder { folder_id: 75, parent_id: Some(74), name: "Chunks", created_at: 1757904377, deleted_at: None
+                        },
+                        {
+                            "-1_-1_-1.mps": File(BrFile { file_id: 245, parent_id: Some(75), name: "-1_-1_-1.mps", content_id: Some(143), created_at: 1757906213, deleted_at: None
+                            })
+                        }),
+                        "ChunkIndex.mps": File(BrFile { file_id: 195, parent_id: Some(74), name: "ChunkIndex.mps", content_id: Some(126), created_at: 1757904377, deleted_at: None
+                        })
+                    })
+                }),
+                "ChunksShared.schema": File(BrFile { file_id: 12, parent_id: Some(5), name: "ChunksShared.schema", content_id: Some(12), created_at: 1757884136, deleted_at: None
+                }),
+                "WiresShared.schema": File(BrFile { file_id: 14, parent_id: Some(5), name: "WiresShared.schema", content_id: Some(14), created_at: 1757884136, deleted_at: None
+                }),
+                "ComponentsShared.schema": File(BrFile { file_id: 48, parent_id: Some(5), name: "ComponentsShared.schema", content_id: Some(47), created_at: 1757885937, deleted_at: None
+                }),
+                "ChunkIndexShared.schema": File(BrFile { file_id: 11, parent_id: Some(5), name: "ChunkIndexShared.schema", content_id: Some(11), created_at: 1757884136, deleted_at: None
+                })
+            }),
+            "Entities": Folder(BrFolder { folder_id: 4, parent_id: Some(3), name: "Entities", created_at: 1757884136, deleted_at: None
+            },
+            {
+                "Chunks": Folder(BrFolder { folder_id: 6, parent_id: Some(4), name: "Chunks", created_at: 1757884136, deleted_at: None
+                },
+                {
+                    "0_0_0.mps": File(BrFile { file_id: 294, parent_id: Some(6), name: "0_0_0.mps", content_id: Some(194), created_at: 1757908001, deleted_at: None
+                    })
+                }),
+                "ChunksShared.schema": File(BrFile { file_id: 10, parent_id: Some(4), name: "ChunksShared.schema", content_id: Some(10), created_at: 1757884136, deleted_at: None
+                }),
+                "ChunkIndex.mps": File(BrFile { file_id: 288, parent_id: Some(4), name: "ChunkIndex.mps", content_id: Some(193), created_at: 1757907965, deleted_at: None
+                }),
+                "ChunkIndex.schema": File(BrFile { file_id: 9, parent_id: Some(4), name: "ChunkIndex.schema", content_id: Some(9), created_at: 1757884136, deleted_at: None
+                })
+            }),
+            "Environment.bp": File(BrFile { file_id: 3, parent_id: Some(3), name: "Environment.bp", content_id: Some(3), created_at: 1757884136, deleted_at: None
+            }),
+            "Owners.schema": File(BrFile { file_id: 5, parent_id: Some(3), name: "Owners.schema", content_id: Some(5), created_at: 1757884136, deleted_at: None
+            }),
+            "GlobalData.mps": File(BrFile { file_id: 175, parent_id: Some(3), name: "GlobalData.mps", content_id: Some(130), created_at: 1757904377, deleted_at: None
+            }),
+            "GlobalData.schema": File(BrFile { file_id: 7, parent_id: Some(3), name: "GlobalData.schema", content_id: Some(7), created_at: 1757884136, deleted_at: None
+            }),
+            "Owners.mps": File(BrFile { file_id: 287, parent_id: Some(3), name: "Owners.mps", content_id: Some(192), created_at: 1757907965, deleted_at: None
+            })
+        })
+    })
+}))

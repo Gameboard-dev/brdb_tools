@@ -104,6 +104,7 @@ name = "brdb_tools"
 version = "0.1.0"
 dependencies = [
  "brdb",
+ "serde_json",
 ]
 
 [[package]]
