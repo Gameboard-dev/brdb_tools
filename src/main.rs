@@ -23,6 +23,8 @@ fn world_path(filename: &str) -> PathBuf {
     PathBuf::from(format!("{}/Brickadia/Saved/Worlds/{}", local, filename))
 }
 
+/// Determine if the chunk is a dynamic brick grid
+/// https://github.com/brickadia-community/brdb/blob/attempt-remove-shadows/crates/brdb/examples/world_remove_shadows.rs#L20-L23
 fn is_dynamic_grid(entity: &Entity) -> bool {
     return entity.data.get_schema_struct()
     .is_some_and(|s| s.0.as_ref() == "Entity_DynamicBrickGrid")
@@ -69,62 +71,75 @@ impl WorldProcessor {
 
     fn duplicate_entities(&mut self) -> Result<(), Box<dyn std::error::Error>> {
 
-        let mut src_entities: EntityChunkIndexSoA = self.db.entity_chunk_index_soa()?;
+        let mut entity_chunk_index_soa: EntityChunkIndexSoA = self.db.entity_chunk_index_soa()?;
 
         let grids: BrFs = self.db.get_fs()?.cd("/World/0/Bricks/Grids")?;
 
-        for &chunk_index in src_entities.chunk_3d_indices.iter() {
+        for &chunk_index in entity_chunk_index_soa.chunk_3d_indices.iter() {
 
             let entities: Vec<Entity> = self.db.entity_chunk(chunk_index)?;
-            let mut dst_entities = EntityChunkSoA::default();
+            let mut entity_chunk_soa = EntityChunkSoA::default();
 
             for entity in entities.into_iter() {
                 
                 // Use original indexes
-                let index: u32 = entity.id.unwrap() as u32;
-                println!("Old Index {}", index);
-                dst_entities.add_entity(&self.global_data, &entity, index);
+                let grid_id: usize = entity.id.unwrap();
+                println!("Old Index {}", grid_id);
+                entity_chunk_soa.add_entity(&self.global_data, &entity, grid_id as u32);
 
-                let new_index: u32 = src_entities.next_persistent_index;
-                src_entities.next_persistent_index += 1; // Ensure unique entity indexing
-                
-                println!("New Index {}", new_index);
 
-                // Duplicate lacks grid
-                let mut duplicate: Entity = entity.clone();
-                duplicate.location.x += 200f32;
-                duplicate.id = Some(new_index as usize);
-                src_entities.num_entities[0] += 1;
-                
-                dst_entities.add_entity(&self.global_data, &duplicate, new_index);
-
-                // Determine if the chunk is a dynamic brick grid
-                // https://github.com/brickadia-community/brdb/blob/attempt-remove-shadows/crates/brdb/examples/world_remove_shadows.rs#L20-L23
+                let mut brick_grid_path:Option<BrPendingFs> = None;
 
                 if is_dynamic_grid(&entity) {
-                    if let Some(grid_id) = entity.id {
-                        let dir: BrPendingFs = grids.cd(grid_id.to_string())?.to_pending(&*self.db)?;
-
-                        self.pending.grid_files.push((grid_id.to_string(), dir.clone()));
-                        println!("Pushed Dynamic Grid {}", grid_id.to_string());
-
-                        self.pending.grid_files.push((new_index.to_string(), dir));
-                        println!("Pushed Dynamic Grid {}", new_index.to_string())
-                    }
+                    brick_grid_path = Some(grids.cd(grid_id.to_string())?.to_pending(&*self.db)?);
+                    self.pending.grid_files.push((grid_id.to_string(), brick_grid_path.clone().unwrap()));
+                    println!("Pushed Dynamic Grid {}", grid_id.to_string());
                 };
+                
+                let mut duplicates = vec![];
+
+                for j in 1..=1 {
+                    for i in 1..=1 {
+
+                        let mut duplicate: Entity = entity.clone();
+
+                        let add_x = 200.0 * i as f32;
+                        let add_y = 200.0 * j as f32;
+                        duplicate.location.x += add_x;
+                        duplicate.location.y += add_y;
+
+                        // The persistent ID is updated after setting the new_index
+                        let persistent_index: u32 = entity_chunk_index_soa.next_persistent_index;
+                        duplicate.id = Some(persistent_index as usize);
+                        println!("New Index {}", persistent_index);
+
+                        entity_chunk_soa.add_entity(&self.global_data, &duplicate, persistent_index);
+
+                        if let Some(path) = brick_grid_path.clone() {
+                            self.pending.grid_files.push((persistent_index.to_string(), path));
+                            println!("Pushed Dynamic Grid {}", persistent_index.to_string());
+                        };
+
+                        duplicates.push(duplicate);
+
+                        entity_chunk_index_soa.num_entities[0] += 1;
+                        entity_chunk_index_soa.next_persistent_index += 1;
+
+                    }
+                }
+
             };
 
-            // Pushes updated dst_entities with duplicates
-            let bytes: Vec<u8> = dst_entities.to_bytes(&self.entity_schema)?;
+            let serialized_entity: Vec<u8> = entity_chunk_soa.to_bytes(&self.entity_schema)?;
 
             self.pending.entity_files.push((
                 format!("{chunk_index}.mps"),
-                BrPendingFs::File(Some(bytes)),
+                BrPendingFs::File(Some(serialized_entity)),
             ));
 
         }
 
-        let chunk_index_bytes: Vec<u8> = self.db.entities_chunk_index_schema()?.write_brdb(ENTITY_CHUNK_INDEX_SOA, &src_entities)?;
+        let chunk_index_bytes: Vec<u8> = self.db.entities_chunk_index_schema()?.write_brdb(ENTITY_CHUNK_INDEX_SOA, &entity_chunk_index_soa)?;
         self.pending.chunk_index = chunk_index_bytes;
 
         Ok(())
@@ -199,9 +214,7 @@ impl WorldProcessor {
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut processor = WorldProcessor::new("Monastery.brdb")?;
     processor.duplicate_entities()?;
-    let _ = processor.save_as("Monastery_v9.brdb");
-    let _ = processor.debug();
-    //processor.save_as("Monastery_V5.brdb")?;
+    let _ = processor.save_as("Monastery_Modified_V13.brdb");
+    // let _ = processor.debug();
     Ok(())
-    
 }
