@@ -98,17 +98,19 @@ impl WorldProcessor {
                 
                 let mut duplicates = vec![];
 
-                for j in 1..=1 {
-                    for i in 1..=1 {
+                let num_columns = 2; // Number of vertical columns
+                let num_rows = 2;    // Number of entities per column
 
+                for col in 0..num_columns {
+                    for row in 0..num_rows {
                         let mut duplicate: Entity = entity.clone();
 
-                        let add_x = 200.0 * i as f32;
-                        let add_y = 200.0 * j as f32;
+                        let add_x = 200.0 * col as f32;
+                        let add_y = 200.0 * row as f32; // Adjust spacing as needed
+
                         duplicate.location.x += add_x;
                         duplicate.location.y += add_y;
 
-                        // The persistent ID is updated after setting the new_index
                         let persistent_index: u32 = entity_chunk_index_soa.next_persistent_index;
                         duplicate.id = Some(persistent_index as usize);
                         println!("New Index {}", persistent_index);
@@ -124,7 +126,6 @@ impl WorldProcessor {
 
                         entity_chunk_index_soa.num_entities[0] += 1;
                         entity_chunk_index_soa.next_persistent_index += 1;
-
                     }
                 }
 
@@ -212,9 +213,9 @@ impl WorldProcessor {
 }
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let mut processor = WorldProcessor::new("Monastery.brdb")?;
+    let mut processor = WorldProcessor::new("Monastery_Modified.brdb")?;
     processor.duplicate_entities()?;
-    let _ = processor.save_as("Monastery_Modified_V13.brdb");
+    let _ = processor.save_as("Monastery_Modified_Modified.brdb");
     // let _ = processor.debug();
     Ok(())
 }
