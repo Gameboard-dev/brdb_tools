@@ -2,7 +2,7 @@ use brdb::{
     fs::BrFs, pending::BrPendingFs, schema::{
         BrdbSchema, 
         BrdbSchemaGlobalData
-    }, BrReader, Brdb, Entity, EntityChunkIndexSoA, EntityChunkSoA, IntoReader
+    }, schemas::ENTITY_CHUNK_INDEX_SOA, BrReader, Brdb, Entity, EntityChunkIndexSoA, EntityChunkSoA, IntoReader
 };
 
 // Import the derive macro for BrFsReader if it is in a proc-macro crate
@@ -30,7 +30,8 @@ fn is_dynamic_grid(entity: &Entity) -> bool {
 
 struct Pending {
     entity_files: Vec<(String, BrPendingFs)>,
-    grid_files: Vec<(String, BrPendingFs)>
+    grid_files: Vec<(String, BrPendingFs)>,
+    chunk_index: Vec<u8>
 }
 
 impl Default for Pending {
@@ -38,6 +39,7 @@ impl Default for Pending {
         Self {
             entity_files: Vec::new(),
             grid_files: Vec::new(),
+            chunk_index: Vec::new()
         }
     }
 }
@@ -71,7 +73,7 @@ impl WorldProcessor {
 
         let grids: BrFs = self.db.get_fs()?.cd("/World/0/Bricks/Grids")?;
 
-        for chunk_index in src_entities.chunk_3d_indices {
+        for &chunk_index in src_entities.chunk_3d_indices.iter() {
 
             let entities: Vec<Entity> = self.db.entity_chunk(chunk_index)?;
             let mut dst_entities = EntityChunkSoA::default();
@@ -91,6 +93,7 @@ impl WorldProcessor {
                 let mut duplicate: Entity = entity.clone();
                 duplicate.location.x += 200f32;
                 duplicate.id = Some(new_index as usize);
+                src_entities.num_entities[0] += 1;
                 
                 dst_entities.add_entity(&self.global_data, &duplicate, new_index);
 
@@ -119,6 +122,9 @@ impl WorldProcessor {
             ));
 
         }
+
+        let chunk_index_bytes: Vec<u8> = self.db.entities_chunk_index_schema()?.write_brdb(ENTITY_CHUNK_INDEX_SOA, &src_entities)?;
+        self.pending.chunk_index = chunk_index_bytes;
 
         Ok(())
     }
@@ -149,8 +155,8 @@ impl WorldProcessor {
                                         BrPendingFs::Folder(Some(mem::take(&mut self.pending.entity_files))),
                                     ),
                                     (
-                                        "ChunkIndex".to_string(),
-                                        BrPendingFs::File(Some(mem::take(&mut self.pending.entity_files))),
+                                        "ChunkIndex.mps".to_string(),
+                                        BrPendingFs::File(Some(mem::take(&mut self.pending.chunk_index))),
                                     ),
                                 ])),
                             ),
