@@ -85,8 +85,9 @@ impl WorldProcessor {
                 println!("Old Index {}", index);
                 dst_entities.add_entity(&self.global_data, &entity, index);
 
-                src_entities.next_persistent_index += 1; // Ensure unique entity indexing
                 let new_index: u32 = src_entities.next_persistent_index;
+                src_entities.next_persistent_index += 1; // Ensure unique entity indexing
+                
                 println!("New Index {}", new_index);
 
                 // Duplicate lacks grid
@@ -198,8 +199,8 @@ impl WorldProcessor {
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut processor = WorldProcessor::new("Monastery.brdb")?;
     processor.duplicate_entities()?;
-    processor.save_as("Monastery_v6.brdb");
-    processor.debug();
+    let _ = processor.save_as("Monastery_v9.brdb");
+    let _ = processor.debug();
     //processor.save_as("Monastery_V5.brdb")?;
     Ok(())
     
