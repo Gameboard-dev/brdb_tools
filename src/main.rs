@@ -103,13 +103,12 @@ impl WorldProcessor {
 
                         self.pending.grid_files.push((grid_id.to_string(), dir.clone()));
                         println!("Pushed Dynamic Grid {}", grid_id.to_string());
-                        
+
                         self.pending.grid_files.push((new_index.to_string(), dir));
                         println!("Pushed Dynamic Grid {}", new_index.to_string())
                     }
                 };
             };
-
 
             // Pushes updated dst_entities with duplicates
             let bytes: Vec<u8> = dst_entities.to_bytes(&self.entity_schema)?;
