@@ -14,6 +14,8 @@ use std::{
     fs,
     sync::Arc,
     path::PathBuf,
+    fs::File,
+    io::Write,
 };
 
 
@@ -98,15 +100,20 @@ impl WorldProcessor {
                 
                 let mut duplicates = vec![];
 
-                let num_columns = 2; // Number of vertical columns
-                let num_rows = 2;    // Number of entities per column
+                let num_columns = 2; 
+                let num_rows = 2;  
 
                 for col in 0..num_columns {
                     for row in 0..num_rows {
+
+                        if row == 0 && col == 0 {
+                            continue;
+                        }
+
                         let mut duplicate: Entity = entity.clone();
 
                         let add_x = 200.0 * col as f32;
-                        let add_y = 200.0 * row as f32; // Adjust spacing as needed
+                        let add_y = 200.0 * row as f32; 
 
                         duplicate.location.x += add_x;
                         duplicate.location.y += add_y;
@@ -205,17 +212,21 @@ impl WorldProcessor {
 
     #[allow(dead_code)]
     fn debug(&mut self) -> Result<(), Box<dyn std::error::Error>> {
-        let grids: BrFs = self.db.get_fs()?.cd("/World")?;
-        println!("[debug] {}", grids.render());
+        let grids: BrFs = self.db.get_fs()?; //.cd("/World")?;
+        let output = grids.render();
+
+        let mut file = File::create("debug.txt")?;
+        writeln!(file, "{}", output)?;
+
         Ok(())
     }
 
 }
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let mut processor = WorldProcessor::new("Monastery_Modified.brdb")?;
+    let mut processor = WorldProcessor::new("Monastery.brdb")?;
     processor.duplicate_entities()?;
-    let _ = processor.save_as("Monastery_Modified_Modified.brdb");
-    // let _ = processor.debug();
+    let _ = processor.save_as("Monastery_Modified.brdb");
+    //let _ = processor.debug();
     Ok(())
 }
