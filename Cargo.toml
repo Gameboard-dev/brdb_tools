@@ -4,5 +4,5 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-brdb = { path = "D:/RUST_PROJECTS/brdb/crates/brdb" }
+brdb = "0.3.1"
 serde_json = "1.0"
