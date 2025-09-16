@@ -125,22 +125,40 @@ impl WorldProcessor {
 
 
     fn patch(&mut self) -> BrPendingFs {
-        return BrPendingFs::Root(vec![(
-            "World".to_owned(),
-            BrPendingFs::Folder(Some(vec![
-                ("0".to_string(),
+        BrPendingFs::Root(vec![
+            (
+                "World".to_owned(),
                 BrPendingFs::Folder(Some(vec![
-                    ("Bricks".to_string(), BrPendingFs::Folder(Some(vec![(
-                        "Grids".to_string(),
-                        BrPendingFs::Folder(Some(mem::take(&mut self.pending.grid_files))),
-                    )]))),
-                    ("Entities".to_string(), BrPendingFs::Folder(Some(vec![
-                        ("Chunks".to_string(),
-                        BrPendingFs::Folder(Some(mem::take(&mut self.pending.entity_files))),
-                    )])),
-                )])),
-            )])),
-        )]);
+                    (
+                        "0".to_string(),
+                        BrPendingFs::Folder(Some(vec![
+                            (
+                                "Bricks".to_string(),
+                                BrPendingFs::Folder(Some(vec![
+                                    (
+                                        "Grids".to_string(),
+                                        BrPendingFs::Folder(Some(mem::take(&mut self.pending.grid_files))),
+                                    ),
+                                ])),
+                            ),
+                            (
+                                "Entities".to_string(),
+                                BrPendingFs::Folder(Some(vec![
+                                    (
+                                        "Chunks".to_string(),
+                                        BrPendingFs::Folder(Some(mem::take(&mut self.pending.entity_files))),
+                                    ),
+                                    (
+                                        "ChunkIndex".to_string(),
+                                        BrPendingFs::File(Some(mem::take(&mut self.pending.entity_files))),
+                                    ),
+                                ])),
+                            ),
+                        ])),
+                    ),
+                ])),
+            ),
+        ])
     }
 
 
