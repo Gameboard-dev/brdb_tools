@@ -153,7 +153,10 @@ impl WorldProcessor {
             fs::remove_file(&savefile)?;
         }
 
-        Brdb::new(&savefile)?.write_pending("Update", pending)?;
+        let new_db: Brdb = Brdb::new(&savefile)?;
+        new_db.write_pending("Update", pending)?;
+        self.db = new_db.into_reader();
+
         println!("Succesfully saved {} to worlds folder in Brickadia", filename);
 
         Ok(())
@@ -171,7 +174,9 @@ impl WorldProcessor {
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut processor = WorldProcessor::new("Monastery.brdb")?;
     processor.duplicate_entities()?;
-    processor.save_as("Monastery_V5.brdb")?;
+    processor.save_as("Monastery_v6.brdb");
+    processor.debug();
+    //processor.save_as("Monastery_V5.brdb")?;
     Ok(())
     
 }
