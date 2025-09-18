@@ -152,7 +152,7 @@ pub enum BrdbSchemaError {
 // src > main > impl WorldProcessor
 
 
-    fn parse_world(&mut self) -> Result<BrPendingFs, Box<dyn std::error::Error>> {
+    fn parse_world_grid(&mut self) -> Result<BrPendingFs, Box<dyn std::error::Error>> {
 
         // This example ONLY parses the Global (static) Brick Grid
         // See https://github.com/brickadia-community/brdb/blob/main/crates/brdb/examples/write_entity.rs
