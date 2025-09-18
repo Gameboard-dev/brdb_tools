@@ -1,12 +1,11 @@
 use brdb::{
-    fs::BrFs, pending::BrPendingFs, schema::{
-        BrdbSchema, 
-        BrdbSchemaGlobalData
-    }, schemas::ENTITY_CHUNK_INDEX_SOA, BrReader, Brdb, Entity, EntityChunkIndexSoA, EntityChunkSoA, IntoReader
+    byte_to_orientation, fs::BrFs, pending::BrPendingFs, schema::{
+        BrdbSchema, BrdbSchemaGlobalData, BrdbStruct, BrdbValue
+    }, schemas::ENTITY_CHUNK_INDEX_SOA, BString, BitFlags, BrFsReader, BrReader, Brdb, BrdbSchemaError, Brick, BrickChunkSoA, BrickType, ChunkIndex, ChunkMeta, Collision, Color, Entity, EntityChunkIndexSoA, EntityChunkSoA, IntoReader, Position, RelativePosition, World
 };
 
-// Import the derive macro for BrFsReader if it is in a proc-macro crate
-use brdb::BrFsReader;
+
+use itertools::izip;
 
 use std::{
     env,
@@ -16,6 +15,7 @@ use std::{
     path::PathBuf,
     fs::File,
     io::Write,
+    convert::TryInto
 };
 
 
@@ -48,6 +48,8 @@ impl Default for Pending {
     }
 }
 
+const GLOBAL_GRID_ID:usize = 1;
+
 
 struct WorldProcessor {
     global_data: Arc<BrdbSchemaGlobalData>,
@@ -71,7 +73,79 @@ impl WorldProcessor {
         })
     }
 
-    fn duplicate_entities(&mut self) -> Result<(), Box<dyn std::error::Error>> {
+    fn parse_world_grid(&mut self) -> Result<BrPendingFs, Box<dyn std::error::Error>> {
+
+        // This example ONLY parses the Global (static) Brick Grid
+        // See https://github.com/brickadia-community/brdb/blob/main/crates/brdb/examples/write_entity.rs
+        // For parsing all entity grids as well
+        
+        let mut world = World::new();
+
+        let metadata: Arc<BrdbSchemaGlobalData> = self.db.read_global_data()?;
+        let chunk_indices: Vec<ChunkMeta> = self.db.brick_chunk_index(GLOBAL_GRID_ID)?;
+    
+        for (i, chunk_meta) in chunk_indices.iter().enumerate() {
+
+            let chunk_index: ChunkIndex = chunk_meta.index;
+            let chunk: BrickChunkSoA = self.db.brick_chunk_soa(GLOBAL_GRID_ID, chunk_index)?.to_value().try_into()?;
+
+            for (i, (
+                relative_position, 
+                orientation_byte, 
+                rgba,
+                material_index,
+                type_index,
+                size_counter,
+                brick_size,
+                owner_index,
+            )) in izip!(
+                chunk.relative_positions,
+                chunk.orientations,
+                chunk.colors_and_alphas,
+                chunk.material_indices,
+                chunk.brick_type_indices,
+                chunk.brick_size_counters,
+                chunk.brick_sizes,
+                chunk.owner_indices,
+            ).enumerate() {
+
+                let (direction, rotation) = byte_to_orientation(orientation_byte);
+
+                world.bricks.push(Brick {
+                    asset: metadata.brick_type_by_index(
+                                        type_index, 
+                                        chunk.procedural_brick_starting_index, 
+                                        brick_size, 
+                                        size_counter
+                                    )?,
+                    owner_index: Some(owner_index as usize),
+                    position: Position::from_relative(chunk_index, relative_position),
+                    rotation,
+                    direction,
+                    collision: Collision {
+                        player: chunk.collision_flags_player.get(i),
+                        weapon: chunk.collision_flags_weapon.get(i),
+                        interact: chunk.collision_flags_interaction.get(i),
+                        tool: chunk.collision_flags_tool.get(i),
+                    },
+                    visible: chunk.visibility_flags.get(i),
+                    color: Color::new(rgba.0, rgba.1, rgba.2),
+                    material_intensity: rgba.3,
+                    material: metadata.material_by_index(material_index)?,
+                    components: Default::default(),
+                    ..Default::default()
+                    }.with_id()
+
+                );
+
+            };
+        }
+
+        return Ok(world.to_unsaved()?.to_pending()?)
+    
+    }
+
+    fn quadruple(&mut self) -> Result<(), Box<dyn std::error::Error>> {
 
         let mut entity_chunk_index_soa: EntityChunkIndexSoA = self.db.entity_chunk_index_soa()?;
 
@@ -86,22 +160,21 @@ impl WorldProcessor {
                 
                 // Use original indexes
                 let grid_id: usize = entity.id.unwrap();
-                println!("Old Index {}", grid_id);
+                //println!("Old Index {}", grid_id);
                 entity_chunk_soa.add_entity(&self.global_data, &entity, grid_id as u32);
-
 
                 let mut brick_grid_path:Option<BrPendingFs> = None;
 
                 if is_dynamic_grid(&entity) {
                     brick_grid_path = Some(grids.cd(grid_id.to_string())?.to_pending(&*self.db)?);
                     self.pending.grid_files.push((grid_id.to_string(), brick_grid_path.clone().unwrap()));
-                    println!("Pushed Dynamic Grid {}", grid_id.to_string());
+                    //println!("Pushed Dynamic Grid {}", grid_id.to_string());
                 };
-                
+
                 let mut duplicates = vec![];
 
-                let num_columns = 2; 
-                let num_rows = 2;  
+                let num_columns = 4; 
+                let num_rows = 4;  
 
                 for col in 0..num_columns {
                     for row in 0..num_rows {
@@ -120,13 +193,13 @@ impl WorldProcessor {
 
                         let persistent_index: u32 = entity_chunk_index_soa.next_persistent_index;
                         duplicate.id = Some(persistent_index as usize);
-                        println!("New Index {}", persistent_index);
+                        //println!("New Index {}", persistent_index);
 
                         entity_chunk_soa.add_entity(&self.global_data, &duplicate, persistent_index);
 
                         if let Some(path) = brick_grid_path.clone() {
                             self.pending.grid_files.push((persistent_index.to_string(), path));
-                            println!("Pushed Dynamic Grid {}", persistent_index.to_string());
+                            //println!("Pushed Dynamic Grid {}", persistent_index.to_string());
                         };
 
                         duplicates.push(duplicate);
@@ -225,8 +298,9 @@ impl WorldProcessor {
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut processor = WorldProcessor::new("Monastery.brdb")?;
-    processor.duplicate_entities()?;
-    let _ = processor.save_as("Monastery_Modified.brdb");
+    //processor.quadruple()?;
+    let _ = processor.parse_world_grid();
+    //let _ = processor.save_as("Monastery_Modified.brdb");
     //let _ = processor.debug();
     Ok(())
 }
