@@ -2,46 +2,14 @@
 
 // brdb\crates\brdb\src\wrapper\brick.rs
 
-/// Attempts to retrieve a field from a `BrdbValue::Struct` and converts it into type `T`.
-///
-/// This function takes a reference to a `HashMap<String, BrdbValue>`, which represents the
-/// internal fields of a `BrdbValue::Struct`. It gets the value associated with `field_name`
-/// and tries to convert it into the inferred type `T`.
-///
-/// The lifetime `'a` ensures that the reference to the field value remains valid for the duration
-/// of the conversion and any use by the caller. The type `T` must implement `TryFrom<&'a BrdbValue>`,
-/// meaning it knows how to interpret a borrowed `BrdbValue` as itself.
-///
-/// Returns `BrdbSchemaError::MissingStructField` if the field is not found.
-/// If the conversion fails, the error from `TryFrom` is propagated via `?`.
-///
-pub fn get_field<'a, T>(
-    value: &'a BrdbStruct,
-    struct_name: &str,
-    field_name: &str,
-) -> Result<T, BrdbSchemaError>
-where
-    T: TryFrom<&'a BrdbValue, Error = BrdbSchemaError>,
-{
-    value
-        .get(field_name)
-        .ok_or_else(|| BrdbSchemaError::MissingStructField(struct_name.into(), field_name.into()))?
-        .try_into()
-}
 
 impl TryFrom<&BrdbValue> for BrickSizeCounter {
     type Error = BrdbSchemaError;
     fn try_from(value: &BrdbValue) -> Result<Self, Self::Error> {
-        match value {
-            BrdbValue::Struct(props) => Ok(BrickSizeCounter {
-                asset_index: get_field(props, "BrickSizeCounter", "AssetIndex")?,
-                num_sizes: get_field(props, "BrickSizeCounter", "NumSizes")?,
-            }),
-            _ => Err(BrdbSchemaError::ExpectedType(
-                "BrickSizeCounter".into(),
-                format!("{:?}", value.get_type()),
-            )),
-        }
+        Ok(Self {
+            asset_index: value.prop("AssetIndex")?.as_brdb_u32()?,
+            num_sizes: value.prop("NumSizes")?.as_brdb_u32()?,
+        })
     }
 }
 
@@ -49,17 +17,11 @@ impl TryFrom<&BrdbValue> for BrickSize {
     type Error = BrdbSchemaError;
 
     fn try_from(value: &BrdbValue) -> Result<Self, Self::Error> {
-        match value {
-            BrdbValue::Struct(props) => Ok(BrickSize {
-                x: get_field(props, "BrickSize", "X")?,
-                y: get_field(props, "BrickSize", "Y")?,
-                z: get_field(props, "BrickSize", "Z")?,
-            }),
-            _ => Err(BrdbSchemaError::ExpectedType(
-                "BrickSize".into(),
-                value.get_type().into(),
-            )),
-        }
+        Ok(Self {
+            x: value.prop("X")?.as_brdb_u16()?,
+            y: value.prop("Y")?.as_brdb_u16()?,
+            z: value.prop("Z")?.as_brdb_u16()?,
+        })
     }
 }
 
@@ -67,19 +29,14 @@ impl TryFrom<&BrdbValue> for RelativePosition {
     type Error = BrdbSchemaError;
 
     fn try_from(value: &BrdbValue) -> Result<Self, Self::Error> {
-        match value {
-            BrdbValue::Struct(props) => Ok(RelativePosition {
-                x: get_field(props, "RelativePosition", "X")?,
-                y: get_field(props, "RelativePosition", "Y")?,
-                z: get_field(props, "RelativePosition", "Z")?,
-            }),
-            _ => Err(BrdbSchemaError::ExpectedType(
-                "RelativePosition".into(),
-                value.get_type().into(),
-            )),
-        }
+        Ok(Self {
+            x: value.prop("X")?.as_brdb_i16()?,
+            y: value.prop("Y")?.as_brdb_i16()?,
+            z: value.prop("Z")?.as_brdb_i16()?,
+        })
     }
 }
+
 
 impl TryFrom<&BrdbValue> for (u8, u8, u8, u8) {
     type Error = BrdbSchemaError;
