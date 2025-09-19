@@ -49,6 +49,7 @@ impl Default for Pending {
 }
 
 const GLOBAL_GRID_ID:usize = 1;
+const TEST_BRICK_OFFSET_Z:i32 = 200;
 
 
 struct WorldProcessor {
@@ -111,6 +112,9 @@ impl WorldProcessor {
 
                 let (direction, rotation) = byte_to_orientation(orientation_byte);
 
+                let mut position = Position::from_relative(chunk_index, relative_position);
+                position.z += TEST_BRICK_OFFSET_Z;
+
                 world.bricks.push(Brick {
                     asset: metadata.brick_type_by_index(
                                         type_index, 
@@ -119,7 +123,7 @@ impl WorldProcessor {
                                         size_counter
                                     )?,
                     owner_index: Some(owner_index as usize),
-                    position: Position::from_relative(chunk_index, relative_position),
+                    position, 
                     rotation,
                     direction,
                     collision: Collision {
@@ -141,7 +145,11 @@ impl WorldProcessor {
             };
         }
 
-        return Ok(world.to_unsaved()?.to_pending()?)
+        let pending: BrPendingFs = world.to_unsaved()?.to_pending()?;
+        let brick_grid: &BrPendingFs = pending.cd(format!("/World/0/Bricks/Grids/{GLOBAL_GRID_ID}"))?;
+        self.pending.grid_files.push((GLOBAL_GRID_ID.to_string(), brick_grid.clone()));
+
+        return Ok(pending)
     
     }
 
@@ -163,11 +171,11 @@ impl WorldProcessor {
                 //println!("Old Index {}", grid_id);
                 entity_chunk_soa.add_entity(&self.global_data, &entity, grid_id as u32);
 
-                let mut brick_grid_path:Option<BrPendingFs> = None;
+                let mut brick_grid:Option<BrPendingFs> = None;
 
                 if is_dynamic_grid(&entity) {
-                    brick_grid_path = Some(grids.cd(grid_id.to_string())?.to_pending(&*self.db)?);
-                    self.pending.grid_files.push((grid_id.to_string(), brick_grid_path.clone().unwrap()));
+                    brick_grid = Some(grids.cd(grid_id.to_string())?.to_pending(&*self.db)?);
+                    self.pending.grid_files.push((grid_id.to_string(), brick_grid.clone().unwrap()));
                     //println!("Pushed Dynamic Grid {}", grid_id.to_string());
                 };
 
@@ -197,7 +205,7 @@ impl WorldProcessor {
 
                         entity_chunk_soa.add_entity(&self.global_data, &duplicate, persistent_index);
 
-                        if let Some(path) = brick_grid_path.clone() {
+                        if let Some(path) = brick_grid.clone() {
                             self.pending.grid_files.push((persistent_index.to_string(), path));
                             //println!("Pushed Dynamic Grid {}", persistent_index.to_string());
                         };

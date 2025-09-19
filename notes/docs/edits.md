@@ -131,7 +131,7 @@ impl BrdbSchemaGlobalData {
 }
 
 
-// Added 3 new errors
+// Added 4 new errors
 
 #[derive(Debug, Error)] 
 pub enum BrdbSchemaError {
@@ -144,12 +144,68 @@ pub enum BrdbSchemaError {
 }
 
 
+#[derive(Debug, Error)]
+pub enum BrFsError {
+    #[error("Empty Folder in directory {0}")]
+    EmptyFolder(String)
+}
 
+
+
+
+// src -> pending.rs
+
+pub fn is_root(&self) -> bool {
+	matches!(self, BrPendingFs::Root(_))
+}
+
+/// Navigate a pending brdb filesystem to a specific path.
+pub fn cd(&self, path: impl AsRef<str>) -> Result<&BrPendingFs, BrFsError> {
+
+	let mut components = path
+		.as_ref()
+		.split('/')
+		.filter(|s| !s.is_empty())
+		.peekable();
+
+	let mut curr: &BrPendingFs = self;
+
+	while let Some(name) = components.next() {
+		let children = match curr {
+			BrPendingFs::Root(items) => items,
+			BrPendingFs::Folder(Some(items)) => items,
+			BrPendingFs::Folder(None) => {
+				return Err(BrFsError::EmptyFolder(name.to_string()));
+			}
+			BrPendingFs::File(_) => {
+				if components.peek().is_some() {
+					return Err(BrFsError::ExpectedDirectory(name.to_string()));
+				} else {
+					return Err(BrFsError::NotFound(name.to_string()));
+				}
+			}
+		};
+
+		match children.iter().find(|(n, _)| n == name) {
+			Some((_, next)) => {
+				curr = next;
+			}
+			None => {
+				return Err(BrFsError::NotFound(name.to_string()));
+			}
+		}
+	}
+
+	Ok(curr)
+}
 
 
 
 
 // src > main > impl WorldProcessor
+
+const GLOBAL_GRID_ID:usize = 1;
+const TEST_BRICK_OFFSET_Z:i32 = 200;
 
 
     fn parse_world_grid(&mut self) -> Result<BrPendingFs, Box<dyn std::error::Error>> {
@@ -190,6 +246,9 @@ pub enum BrdbSchemaError {
 
                 let (direction, rotation) = byte_to_orientation(orientation_byte);
 
+                let mut position = Position::from_relative(chunk_index, relative_position);
+                position.z += TEST_BRICK_OFFSET_Z;
+
                 world.bricks.push(Brick {
                     asset: metadata.brick_type_by_index(
                                         type_index, 
@@ -198,7 +257,7 @@ pub enum BrdbSchemaError {
                                         size_counter
                                     )?,
                     owner_index: Some(owner_index as usize),
-                    position: Position::from_relative(chunk_index, relative_position),
+                    position, 
                     rotation,
                     direction,
                     collision: Collision {
@@ -220,7 +279,11 @@ pub enum BrdbSchemaError {
             };
         }
 
-        return Ok(world.to_unsaved()?.to_pending()?)
+        let pending: BrPendingFs = world.to_unsaved()?.to_pending()?;
+        let brick_grid: &BrPendingFs = pending.cd(format!("/World/0/Bricks/Grids/{GLOBAL_GRID_ID}"))?;
+        self.pending.grid_files.push((GLOBAL_GRID_ID.to_string(), brick_grid.clone()));
+
+        return Ok(pending)
     
     }
 
