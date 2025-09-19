@@ -308,7 +308,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut processor = WorldProcessor::new("Monastery.brdb")?;
     //processor.quadruple()?;
     let _ = processor.parse_world_grid();
-    //let _ = processor.save_as("Monastery_Modified.brdb");
+    let _ = processor.save_as("Monastery_Modified.brdb");
     //let _ = processor.debug();
     Ok(())
 }
